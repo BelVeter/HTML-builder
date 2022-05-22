@@ -23,7 +23,7 @@ function htmlReplace(componentsFolderPath, targetFilePath){
     let fullPaths = [];
     files.forEach((file) => {
       if(file.isDirectory()) return;
-      if(path.extname(file.name)==='.html' || path.extname(file.name)==='.htm') fullPaths.push(path.join(componentsFolderPath, file.name));
+      if(path.extname(file.name)==='.html') fullPaths.push(path.join(componentsFolderPath, file.name));
     });
   
     Promise.all(
@@ -46,6 +46,9 @@ function htmlReplace(componentsFolderPath, targetFilePath){
         contentToReplaceArray.forEach((el) => {
           rez = rez.replace(el.tag, el.content);
         });
+
+        //remove empty tags if any
+        rez = rez.replace(/{{(.*?)}}/, '');
 
         fs.writeFile(targetFilePath, rez, (err)=>{
           if(err) console.log('Error while putting content in html target file: '+err.message);
@@ -77,7 +80,7 @@ function cssBuild(sourcePath, targetFilePath){
         totalContent += content.toString()+'\n';
       });
       fs.writeFile(targetFilePath, totalContent, (err)=>{
-        if(err) console.log('Error while putting content in boundle.css file: '+err.message);
+        if(err) console.log('Error while putting content in bundle.css file: '+err.message);
       });
     }).catch((err)=>{
       console.log(err.message);

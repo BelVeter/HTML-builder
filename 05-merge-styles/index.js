@@ -21,7 +21,7 @@ fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
       totalContent += content.toString()+'\n';
     });
     fs.writeFile(path.join(__dirname, 'project-dist', 'bundle.css'), totalContent, (err)=>{
-      if(err) console.log('Error while putting content in boundle.css file: '+err.message);
+      if(err) console.log('Error while putting content in bundle.css file: '+err.message);
     });
   }).catch((err)=>{
     console.log(err.message);
