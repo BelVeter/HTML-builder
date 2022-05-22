@@ -2,8 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const { promises: { readFile } } = require('fs');
 
-const { stdin, stdout } = process;
-
 const sourcePath = path.join(__dirname, 'styles');
 
 fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
@@ -20,7 +18,7 @@ fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
   ).then((filesContentArray) => {
     let totalContent = '';
     filesContentArray.forEach((content) => {
-      totalContent += content+'\n';
+      totalContent += content.toString()+'\n';
     });
     fs.writeFile(path.join(__dirname, 'project-dist', 'bundle.css'), totalContent, (err)=>{
       if(err) console.log('Error while putting content in boundle.css file: '+err.message);
